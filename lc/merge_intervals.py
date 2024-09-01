@@ -1,3 +1,5 @@
+#  the shorter version could reference arrow_shot.py
+
 from typing import List
 
 class Solution:

@@ -1,5 +1,6 @@
 # Note: This is a shortcut solution similiar to merge_intervals
 #  the solution could be improved by loop through the array as it's already sorted
+#  the shorter version could reference arrow_shot.py
 
 from typing import List
 
