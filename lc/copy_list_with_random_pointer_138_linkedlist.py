@@ -35,7 +35,8 @@ class Node:
         self.random = random
 
 class Solution:
-    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+    # use hashmap
+    def copyRandomList1(self, head: 'Optional[Node]') -> 'Optional[Node]':
         if not head:
             return None
         old_to_new = {}
@@ -56,6 +57,40 @@ class Solution:
 # Complexity Analysis
 # Time Complexity: O(n) — Each node is visited twice.
 # Space Complexity: O(n) — To store the hash map.
+
+    # Interweaving Nodes
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if not head:
+            return None
+
+        # create the new nodes and save it in between the current node and the current node's next
+        curr = head
+        while curr:
+            new_node = Node(curr.val, curr.next)
+            curr.next = new_node
+            curr = new_node.next
+
+        # set the random pointers for the new nodes 
+        curr = head
+        while curr:
+            if curr.random:
+                curr.next.random = curr.random.next
+            curr = curr.next.next
+
+        # separating lists
+        curr = head
+        new_head = head.next
+        new_curr = new_head
+        while curr:
+            curr.next = curr.next.next
+            new_curr.next = new_curr.next.next if new_curr.next else None
+
+            curr = curr.next
+            new_curr = new_curr.next
+        return new_head
+    #  Complexity Analysis
+    #   Time Complexity: O(n) — Each node is visited multiple times but it's still linear time.
+    #   Space Complexity: O(1) — No additional memory is used for mapping; we only allocate nodes for the new list.
 
 # Helper function to convert list to linked list
 def build_linked_list(arr):
